@@ -3,14 +3,18 @@
  */
 
 var express = require('express'),
-    JSX = require('node-jsx').install(),
-    reactTools = require('react-tools'),
+    JSX = require('node-jsx').install({harmony: true}),
     React = require('react'),
+    Home = React.createFactory(require('./../components/Home.jsx')),
     router = express.Router();
 
 
 router.get('/',function(req,res,next){
-    res.render('index',{title:"Data analytics"});
+
+    var markup = React.renderToString(Home({}));
+
+
+    res.render('home',{title:"Data analytics",markup:markup});
 
 
 });

@@ -4,6 +4,7 @@
 
 
 var express = require('express'),
+    exphbs = require('express-handlebars'),
     config = require('./config/dev'),
     routes = require('./routes');
 
@@ -12,9 +13,11 @@ var express = require('express'),
 var app = express();
 var port = process.env.PORT || 8080;
 
-app.set('views', __dirname + '/views');
-app.set('view engine','jsx');
-app.engine('jsx',require('express-react-views').createEngine());
+
+
+app.engine('handlebars', exphbs({defaultLayout:'main'}));
+app.set('view engine','handlebars');
+
 app.use(express.static(__dirname + '/public'));
 
 routes(app);
