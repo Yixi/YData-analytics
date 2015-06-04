@@ -23,6 +23,8 @@ const server = express();
 server.set('views',path.join(__dirname,'views'));
 server.set('view engine','ejs');
 
+server.use(express.static(__dirname + '/public'));
+
 server.use(log4js.connectLogger(logger,{level:log4js.levels.DEBUG}));
 
 
