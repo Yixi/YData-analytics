@@ -3,3 +3,4 @@
  */
 
 
+var React = require('react');

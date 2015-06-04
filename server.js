@@ -1,30 +1,44 @@
 /**
- * Created by Yixi on 5/19/15.
+ * Created by Yixi on 6/4/15.
  */
 
 
-var express = require('express'),
-    exphbs = require('express-handlebars'),
-    config = require('./config/dev'),
-    routes = require('./routes');
+import express from 'express';
+import path from 'path';
+import log4js from 'log4js';
+import RRouter from 'react-router';
+import React from 'react';
+
+import config from './config/dev.js';
+import routes from './config/routes.js';
+
+var logger = require('./config/logger')("dataAnalytics");
 
 
 
-var app = express();
-var port = process.env.PORT || 8080;
 
 
+const server = express();
 
-app.engine('handlebars', exphbs({defaultLayout:'main'}));
-app.set('view engine','handlebars');
+server.set('views',path.join(__dirname,'views'));
+server.set('view engine','ejs');
 
-app.use(express.static(__dirname + '/public'));
-
-routes(app);
-
+server.use(log4js.connectLogger(logger,{level:log4js.levels.DEBUG}));
 
 
-var server = app.listen(config.port,function(){
-    console.log('Listening on port %d', server.address().port);
+server.use(function(req,res,next){
+    var ro = RRouter.create({location:req.url,routes:routes});
+
+    ro.run( (Handler,state) => {
+        res.render('default',{markup:React.renderToString(<Handler/>)})
+    });
 });
+
+
+
+server.listen(config.port,function(){
+    logger.info('Listening on port %s',config.port);
+});
+
+export default server;
 
