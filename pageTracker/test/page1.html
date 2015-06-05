@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)http://facebook.github.io/react/docs/reconciliation.html -->
+<html class="wf-proximanova-i3-active wf-proximanova-i4-active wf-proximanova-i7-active wf-proximanova-n3-active wf-proximanova-n4-active wf-proximanova-n7-active wf-sourcecodepro-n4-active wf-sourcecodepro-n7-active wf-active"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Reconciliation | React</title>
+    <meta name="viewport" content="width=device-width">
+    <meta property="og:title" content="Reconciliation | React">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://facebook.github.io/react/docs/reconciliation.html">
+    <meta property="og:image" content="https://facebook.github.io/react/img/logo_og.png">
+    <meta property="og:description" content="A JavaScript library for building user interfaces">
+    <meta property="fb:app_id" content="623268441017527">
+
+    <link rel="shortcut icon" href="http://facebook.github.io/react/favicon.ico">
+    <link rel="alternate" type="application/rss+xml" title="React" href="https://facebook.github.io/react/feed.xml">
+
+    <link rel="stylesheet" href="http://facebook.github.io/react/css/syntax.css">
+    <link rel="stylesheet" href="http://facebook.github.io/react/css/codemirror.css">
+    <link rel="stylesheet" href="http://facebook.github.io/react/css/react.css">
+    <script>
+
+        window.YData = window.YData || [], YData.load = function(t){
+            window.YData.id = t;
+            var a = document.createElement('script');
+            a.type = 'text/javascript', a.async = !0, a.src='/src/Ytrack.js';
+            var n = document.getElementsByTagName("script")[0];
+            n.parentNode.insertBefore(a,n);
+        };
+        YData.load('dev');
+
+    </script>
+
+
+    <style type="text/css">#yddContainer{display:block;font-family:Microsoft YaHei;position:relative;width:100%;height:100%;top:-4px;left:-4px;font-size:12px;border:1px solid}#yddTop{display:block;height:22px}#yddTopBorderlr{display:block;position:static;height:17px;padding:2px 28px;line-height:17px;font-size:12px;color:#5079bb;font-weight:bold;border-style:none solid;border-width:1px}#yddTopBorderlr .ydd-sp{position:absolute;top:2px;height:0;overflow:hidden}.ydd-icon{left:5px;width:17px;padding:0px 0px 0px 0px;padding-top:17px;background-position:-16px -44px}.ydd-close{right:5px;width:16px;padding-top:16px;background-position:left -44px}#yddKeyTitle{float:left;text-decoration:none}#yddMiddle{display:block;margin-bottom:10px}.ydd-tabs{display:block;margin:5px 0;padding:0 5px;height:18px;border-bottom:1px solid}.ydd-tab{display:block;float:left;height:18px;margin:0 5px -1px 0;padding:0 4px;line-height:18px;border:1px solid;border-bottom:none}.ydd-trans-container{display:block;line-height:160%}.ydd-trans-container a{text-decoration:none;}#yddBottom{position:absolute;bottom:0;left:0;width:100%;height:22px;line-height:22px;overflow:hidden;background-position:left -22px}.ydd-padding010{padding:0 10px}#yddWrapper{color:#252525;z-index:10001;background:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ab20.png);}#yddContainer{background:#fff;border-color:#4b7598}#yddTopBorderlr{border-color:#f0f8fc}#yddWrapper .ydd-sp{background-image:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ydd-sprite.png)}#yddWrapper a,#yddWrapper a:hover,#yddWrapper a:visited{color:#50799b}#yddWrapper .ydd-tabs{color:#959595}.ydd-tabs,.ydd-tab{background:#fff;border-color:#d5e7f3}#yddBottom{color:#363636}#yddWrapper{min-width:250px;max-width:400px;}</style><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}
+    .fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_close_icon:active{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_loader{background-color:#f6f7f8;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #3a5795;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{max-height:590px;min-height:590px;max-width:500px;min-width:500px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;left:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #2f477a;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f6f7f8;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}
+    .fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}</style></head>
+<body data-twttr-rendered="true">
+
+<div class="container">
+
+    <div class="nav-main">
+        <div class="wrap">
+            <a class="nav-home" href="http://facebook.github.io/react/index.html">
+                React
+            </a>
+            <ul class="nav-site nav-site-internal">
+                <li><a href="http://facebook.github.io/react/docs/getting-started.html" class="active">Docs</a></li>
+                <li><a href="http://facebook.github.io/react/support.html">Support</a></li>
+                <li><a href="http://facebook.github.io/react/downloads.html">Download</a></li>
+                <li><a href="http://facebook.github.io/react/blog/">Blog</a></li>
+            </ul>
+
+            <ul class="nav-site nav-site-external">
+                <li><a href="https://github.com/facebook/react">GitHub</a>
+                </li><li><a href="https://facebook.github.io/react-native/">React Native</a>
+            </li></ul>
+        </div>
+    </div>
+
+
+
+    <section class="content wrap documentationContent">
+        <div class="nav-docs">
+            <!-- Docs Nav -->
+
+            <div class="nav-docs-section">
+                <h3>Quick Start</h3>
+                <ul>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/getting-started.html">Getting Started</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/tutorial.html">Tutorial</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/thinking-in-react.html">Thinking in React</a>
+
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="nav-docs-section">
+                <h3>Community Resources</h3>
+                <ul>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/conferences.html">Conferences</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/videos.html">Videos</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/complementary-tools.html">Complementary Tools</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/examples.html">Examples</a>
+
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="nav-docs-section">
+                <h3>Guides</h3>
+                <ul>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/why-react.html">Why React?</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/displaying-data.html">Displaying Data</a>
+
+                        <ul>
+
+                            <li>
+                                <a href="http://facebook.github.io/react/docs/jsx-in-depth.html">JSX in Depth</a>
+                            </li>
+
+                            <li>
+                                <a href="http://facebook.github.io/react/docs/jsx-spread.html">JSX Spread Attributes</a>
+                            </li>
+
+                            <li>
+                                <a href="http://facebook.github.io/react/docs/jsx-gotchas.html">JSX Gotchas</a>
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html">Interactivity and Dynamic UIs</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/multiple-components.html">Multiple Components</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/reusable-components.html">Reusable Components</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/transferring-props.html">Transferring Props</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/forms.html">Forms</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/working-with-the-browser.html">Working With the Browser</a>
+
+                        <ul>
+
+                            <li>
+                                <a href="http://facebook.github.io/react/docs/more-about-refs.html">More About Refs</a>
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/tooling-integration.html">Tooling Integration</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/addons.html">Add-Ons</a>
+
+                        <ul>
+
+                            <li>
+                                <a href="http://facebook.github.io/react/docs/animation.html">Animation</a>
+                            </li>
+
+                            <li>
+                                <a href="http://facebook.github.io/react/docs/two-way-binding-helpers.html">Two-Way Binding Helpers</a>
+                            </li>
+
+                            <li>
+                                <a href="http://facebook.github.io/react/docs/class-name-manipulation.html">Class Name Manipulation</a>
+                            </li>
+
+                            <li>
+                                <a href="http://facebook.github.io/react/docs/test-utils.html">Test Utilities</a>
+                            </li>
+
+                            <li>
+                                <a href="http://facebook.github.io/react/docs/clone-with-props.html">Cloning Elements</a>
+                            </li>
+
+                            <li>
+                                <a href="http://facebook.github.io/react/docs/create-fragment.html">Keyed Fragments</a>
+                            </li>
+
+                            <li>
+                                <a href="http://facebook.github.io/react/docs/update.html">Immutability Helpers</a>
+                            </li>
+
+                            <li>
+                                <a href="http://facebook.github.io/react/docs/pure-render-mixin.html">PureRenderMixin</a>
+                            </li>
+
+                            <li>
+                                <a href="http://facebook.github.io/react/docs/perf.html">Performance Tools</a>
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/advanced-performance.html">Advanced Performance</a>
+
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="nav-docs-section">
+                <h3>Reference</h3>
+                <ul>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/top-level-api.html">Top-Level API</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/component-api.html">Component API</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/component-specs.html">Component Specs and Lifecycle</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/tags-and-attributes.html">Supported Tags and Attributes</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/events.html">Event System</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/dom-differences.html">DOM Differences</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/special-non-dom-attributes.html">Special Non-DOM Attributes</a>
+
+                    </li>
+
+                    <li>
+                        <a href="./Reconciliation _ React_files/Reconciliation _ React.html" class="active">Reconciliation</a>
+
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/docs/glossary.html">React (Virtual) DOM Terminology</a>
+
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="nav-docs-section">
+                <h3>Flux</h3>
+                <ul>
+
+                    <li>
+                        <a href="https://facebook.github.io/flux/docs/overview.html">Flux Overview</a>
+
+                    </li>
+
+                    <li>
+                        <a href="https://facebook.github.io/flux/docs/todo-list.html">Flux TodoMVC Tutorial</a>
+
+                    </li>
+
+                </ul>
+            </div>
+
+
+            <!-- Tips Nav -->
+
+            <div class="nav-docs-section">
+                <h3>Tips</h3>
+                <ul>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/introduction.html">Introduction</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/inline-styles.html">Inline Styles</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/if-else-in-JSX.html">If-Else in JSX</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/self-closing-tag.html">Self-Closing Tag</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/maximum-number-of-jsx-root-nodes.html">Maximum Number of JSX Root Nodes</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/style-props-value-px.html">Shorthand for Specifying Pixel Values in style props</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/children-props-type.html">Type of the Children props</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/controlled-input-null-value.html">Value of null for Controlled Input</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/componentWillReceiveProps-not-triggered-after-mounting.html">componentWillReceiveProps Not Triggered After Mounting</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/props-in-getInitialState-as-anti-pattern.html">Props in getInitialState Is an Anti-Pattern</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/dom-event-listeners.html">DOM Event Listeners in a Component</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/initial-ajax.html">Load Initial Data via AJAX</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/false-in-jsx.html">False in JSX</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/communicate-between-components.html">Communicate Between Components</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/expose-component-functions.html">Expose Component Functions</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/references-to-components.html">References to Components</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/children-undefined.html">this.props.children undefined</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/use-react-with-other-libraries.html">Use React with Other Libraries</a>
+                    </li>
+
+                    <li>
+                        <a href="http://facebook.github.io/react/tips/dangerously-set-inner-html.html">Dangerously Set innerHTML</a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+
+        <div class="inner-content">
+            <h1>
+                Reconciliation
+                <a class="edit-page-link" href="https://github.com/facebook/react/tree/master/docs/docs/ref-08-reconciliation.md" target="_blank">Edit on GitHub</a>
+            </h1>
+            <div class="subHeader"></div>
+
+            <p>React's key design decision is to make the API seem like it re-renders the whole app on every update. This makes writing applications a lot easier but is also an incredible challenge to make it tractable. This article explains how with powerful heuristics we managed to turn a O(n<sup>3</sup>) problem into a O(n) one.</p>
+            <h2><a class="anchor" name="motivation"></a>Motivation <a class="hash-link" href="http://facebook.github.io/react/docs/reconciliation.html#motivation">#</a></h2>
+            <p>Generating the minimum number of operations to transform one tree into another is a complex and well-studied problem. The <a href="http://grfia.dlsi.ua.es/ml/algorithms/references/editsurvey_bille.pdf">state of the art algorithms</a> have a complexity in the order of O(n<sup>3</sup>) where n is the number of nodes in the tree.</p>
+
+            <p>This means that displaying 1000 nodes would require in the order of one billion comparisons. This is far too expensive for our use case. To put this number in perspective, CPUs nowadays execute roughly 3 billion instruction per second. So even with the most performant implementation, we wouldn't be able to compute that diff in less than a second.</p>
+
+            <p>Since an optimal algorithm is not tractable, we implement a non-optimal O(n) algorithm using heuristics based on two assumptions:</p>
+
+            <ol>
+                <li>Two components of the same class will generate similar trees and two components of different classes will generate different trees.</li>
+                <li>It is possible to provide a unique key for elements that is stable across different renders.</li>
+            </ol>
+
+            <p>In practice, these assumptions are ridiculously fast for almost all practical use cases.</p>
+            <h2><a class="anchor" name="pair-wise-diff"></a>Pair-wise diff <a class="hash-link" href="http://facebook.github.io/react/docs/reconciliation.html#pair-wise-diff">#</a></h2>
+            <p>In order to do a tree diff, we first need to be able to diff two nodes. There are three different cases being handled.</p>
+            <h3><a class="anchor" name="different-node-types"></a>Different Node Types <a class="hash-link" href="http://facebook.github.io/react/docs/reconciliation.html#different-node-types">#</a></h3>
+            <p>If the node type is different, React is going to treat them as two different sub-trees, throw away the first one and build/insert the second one. </p>
+            <div class="highlight"><pre><code class="language-xml" data-lang="xml">renderA: <span class="nt">&lt;div</span> <span class="nt">/&gt;</span>
+                renderB: <span class="nt">&lt;span</span> <span class="nt">/&gt;</span>
+                =&gt; [removeNode <span class="nt">&lt;div</span> <span class="nt">/&gt;</span>], [insertNode <span class="nt">&lt;span</span> <span class="nt">/&gt;</span>]
+            </code></pre></div>
+            <p>The same logic is used for custom components. If they are not of the same type, React is not going to even try at matching what they render. It is just going to remove the first one from the DOM and insert the second one.</p>
+            <div class="highlight"><pre><code class="language-xml" data-lang="xml">renderA: <span class="nt">&lt;Header</span> <span class="nt">/&gt;</span>
+                renderB: <span class="nt">&lt;Content</span> <span class="nt">/&gt;</span>
+                =&gt; [removeNode <span class="nt">&lt;Header</span> <span class="nt">/&gt;</span>], [insertNode <span class="nt">&lt;Content</span> <span class="nt">/&gt;</span>]
+            </code></pre></div>
+            <p>Having this high level knowledge is a very important aspect of why React's diff algorithm is both fast and precise. It provides a good heuristic to quickly prune big parts of the tree and focus on parts likely to be similar.</p>
+
+            <p>It is very unlikely that a <code>&lt;Header&gt;</code> element is going to generate a DOM that is going to look like what a <code>&lt;Content&gt;</code> would generate. Instead of spending time trying to match those two structures, React just re-builds the tree from scratch.</p>
+
+            <p>As a corollary, if there is a <code>&lt;Header&gt;</code> element at the same position in two consecutive renders, you would expect to see a very similar structure and it is worth exploring it.</p>
+            <h3><a class="anchor" name="dom-nodes"></a>DOM Nodes <a class="hash-link" href="http://facebook.github.io/react/docs/reconciliation.html#dom-nodes">#</a></h3>
+            <p>When comparing two DOM nodes, we look at the attributes of both and can decide which of them changed in linear time.</p>
+            <div class="highlight"><pre><code class="language-xml" data-lang="xml">renderA: <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"before"</span> <span class="nt">/&gt;</span>
+                renderB: <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"after"</span> <span class="nt">/&gt;</span>
+                =&gt; [replaceAttribute id "after"]
+            </code></pre></div>
+            <p>Instead of treating style as an opaque string, a key-value object is used instead. This lets us update only the properties that changed.</p>
+            <div class="highlight"><pre><code class="language-xml" data-lang="xml">renderA: <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">{{color:</span> <span class="err">'red'}}</span> <span class="nt">/&gt;</span>
+                renderB: <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">{{fontWeight:</span> <span class="err">'bold'}}</span> <span class="nt">/&gt;</span>
+                =&gt; [removeStyle color], [addStyle font-weight 'bold']
+            </code></pre></div>
+            <p>After the attributes have been updated, we recurse on all the children.</p>
+            <h3><a class="anchor" name="custom-components"></a>Custom Components <a class="hash-link" href="http://facebook.github.io/react/docs/reconciliation.html#custom-components">#</a></h3>
+            <p>We decided that the two custom components are the same. Since components are stateful, we cannot just use the new component and call it a day. React takes all the attributes from the new component and calls <code>component[Will/Did]ReceiveProps()</code> on the previous one.</p>
+
+            <p>The previous component is now operational. Its <code>render()</code> method is called and the diff algorithm restarts with the new result and the previous result.</p>
+            <h2><a class="anchor" name="list-wise-diff"></a>List-wise diff <a class="hash-link" href="http://facebook.github.io/react/docs/reconciliation.html#list-wise-diff">#</a></h2><h3><a class="anchor" name="problematic-case"></a>Problematic Case <a class="hash-link" href="http://facebook.github.io/react/docs/reconciliation.html#problematic-case">#</a></h3>
+            <p>In order to do children reconciliation, React adopts a very naive approach. It goes over both lists of children at the same time and generates a mutation whenever there's a difference.</p>
+
+            <p>For example if you add an element at the end:</p>
+            <div class="highlight"><pre><code class="language-xml" data-lang="xml">renderA: <span class="nt">&lt;div&gt;&lt;span&gt;</span>first<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                renderB: <span class="nt">&lt;div&gt;&lt;span&gt;</span>first<span class="nt">&lt;/span&gt;&lt;span&gt;</span>second<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                =&gt; [insertNode <span class="nt">&lt;span&gt;</span>second<span class="nt">&lt;/span&gt;</span>]
+            </code></pre></div>
+            <p>Inserting an element at the beginning is problematic. React is going to see that both nodes are spans and therefore run into a mutation mode.</p>
+            <div class="highlight"><pre><code class="language-xml" data-lang="xml">renderA: <span class="nt">&lt;div&gt;&lt;span&gt;</span>first<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                renderB: <span class="nt">&lt;div&gt;&lt;span&gt;</span>second<span class="nt">&lt;/span&gt;&lt;span&gt;</span>first<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                =&gt; [replaceAttribute textContent 'second'], [insertNode <span class="nt">&lt;span&gt;</span>first<span class="nt">&lt;/span&gt;</span>]
+            </code></pre></div>
+            <p>There are many algorithms that attempt to find the minimum sets of operations to transform a list of elements. <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance</a> can find the minimum using single element insertion, deletion and substitution in O(n<sup>2</sup>). Even if we were to use Levenshtein, this doesn't find when a node has moved into another position and algorithms to do that have much worse complexity.</p>
+            <h3><a class="anchor" name="keys"></a>Keys <a class="hash-link" href="http://facebook.github.io/react/docs/reconciliation.html#keys">#</a></h3>
+            <p>In order to solve this seemingly intractable issue, an optional attribute has been introduced. You can provide for each child a key that is going to be used to do the matching. If you specify a key, React is now able to find insertion, deletion, substitution and moves in O(n) using a hash table.</p>
+            <div class="highlight"><pre><code class="language-xml" data-lang="xml">renderA: <span class="nt">&lt;div&gt;&lt;span</span> <span class="na">key=</span><span class="s">"first"</span><span class="nt">&gt;</span>first<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                renderB: <span class="nt">&lt;div&gt;&lt;span</span> <span class="na">key=</span><span class="s">"second"</span><span class="nt">&gt;</span>second<span class="nt">&lt;/span&gt;&lt;span</span> <span class="na">key=</span><span class="s">"first"</span><span class="nt">&gt;</span>first<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                =&gt; [insertNode <span class="nt">&lt;span&gt;</span>second<span class="nt">&lt;/span&gt;</span>]
+            </code></pre></div>
+            <p>In practice, finding a key is not really hard. Most of the time, the element you are going to display already has a unique id. When that's not the case, you can add a new ID property to your model or hash some parts of the content to generate a key. Remember that the key only has to be unique among its siblings, not globally unique.</p>
+            <h2><a class="anchor" name="trade-offs"></a>Trade-offs <a class="hash-link" href="http://facebook.github.io/react/docs/reconciliation.html#trade-offs">#</a></h2>
+            <p>It is important to remember that the reconciliation algorithm is an implementation detail. React could re-render the whole app on every action; the end result would be the same. We are regularly refining the heuristics in order to make common use cases faster.</p>
+
+            <p>In the current implementation, you can express the fact that a sub-tree has been moved amongst its siblings, but you cannot tell that it has moved somewhere else. The algorithm will re-render that full sub-tree.</p>
+
+            <p>Because we rely on two heuristics, if the assumptions behind them are not met, performance will suffer.</p>
+
+            <ol>
+                <li><p>The algorithm will not try to match sub-trees of different components classes. If you see yourself alternating between two components classes with very similar output, you may want to make it the same class. In practice, we haven't found this to be an issue.</p></li>
+                <li><p>If you don't provide stable keys (by using Math.random() for example), all the sub-trees are going to be re-rendered every single time. By giving the users the choice to choose the key, they have the ability to shoot themselves in the foot.</p></li>
+            </ol>
+
+
+            <div class="docs-prevnext">
+
+                <a class="docs-prev" href="http://facebook.github.io/react/docs/special-non-dom-attributes.html">← Prev</a>
+
+
+                <a class="docs-next" href="http://facebook.github.io/react/docs/glossary.html">Next →</a>
+
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="wrap">
+        <div class="left">
+            A Facebook &amp; Instagram collaboration.<br>
+            <a href="http://facebook.github.io/react/acknowledgements.html">Acknowledgements</a>
+        </div>
+        <div class="right">
+            © 2013–2015 Facebook Inc.<br>
+            Documentation licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+        </div>
+    </footer>
+</div>
+
