@@ -5,7 +5,10 @@
 var path = require('path');
 
 module.exports = {
-    entry:"./client.js",
+    entry:{
+        main:"./client.js",
+        YTracker:"./pageTracker/src/tracker.js"
+    },
 
     output:{
         filename:"[name].js",
