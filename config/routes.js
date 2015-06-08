@@ -10,7 +10,7 @@ import App from '../components/layout/App.js';
 
 var router = (
     <Route handler={App}>
-
+        <Route path="h"></Route>
     </Route>
 );
 

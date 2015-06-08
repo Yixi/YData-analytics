@@ -1,1 +1,207 @@
-!function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,e),o.loaded=!0,o.exports}var n={};return e.m=t,e.c=n,e.p="/js/",e(0)}({0:function(t,e,n){"use strict";function r(){i.on(window,"hashchange",a.viewEventHook),a.viewEventHook()}function o(){console.log("script running..."),r()}var i=n(28),a=n(50);o()},28:function(t,e,n){"use strict";function r(t){return t.replace(/^\s+/,"").replace(/\s+$/,"")}function o(t){var e={},n={referrer:"r",domain:"d",path:"p",search:"s",hash:"h"};for(var r in t)t.hasOwnProperty(r)&&(void 0!==n[r]?e[n[r]]=t[r]:e[r]=t[r]);return e}function i(t){var e="";t=o(t),console.log(t);for(var n in t)t.hasOwnProperty(n)&&void 0!==t[n]&&""!==r(t[n])&&(e+=n+"="+encodeURIComponent(t[n])+"&");return e.slice(0,-1)}function a(t,e,n){t.addEventListener(e,n,!1)}function u(t){new Image;console.log(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.sendToServer=u,e.on=a,e.convertToQuery=i},50:function(t,e,n){"use strict";function r(){console.log("change");var t=window.document,e=t.referrer,n=window.location.host,r=window.location.pathname,i=window.location.search,a=window.location.hash,u=o.convertToQuery({referrer:e,domain:n,path:r,search:i,hash:a});o.sendToServer(u)}Object.defineProperty(e,"__esModule",{value:!0});var o=n(28);e.viewEventHook=r}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/js/";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ 0:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Created by Yixi on 6/8/15.
+	 */
+
+	'use strict';
+
+	var _utilJs = __webpack_require__(1);
+
+	var _viewEventJs = __webpack_require__(2);
+
+	function bindViewEvent() {
+	    (0, _utilJs.on)(window, 'hashchange', _viewEventJs.viewEventHook);
+	    (0, _viewEventJs.viewEventHook)(); //hook when enter page.
+	}
+
+	function start() {
+	    console.log('script running...');
+
+	    bindViewEvent();
+	}
+
+	start();
+
+/***/ },
+
+/***/ 1:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Created by Yixi on 6/8/15.
+	 */
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var _configJs = __webpack_require__(51);
+
+	var _configJs2 = _interopRequireDefault(_configJs);
+
+	function trim(str) {
+	    return str.replace(/^\s+/, "").replace(/\s+$/, "");
+	}
+
+	function processQuery(json) {
+	    var newJson = {};
+
+	    var hash = {
+	        referrer: "r",
+	        domain: "d",
+	        path: "p",
+	        search: "s",
+	        hash: "h"
+	    };
+
+	    for (var key in json) {
+	        if (json.hasOwnProperty(key)) {
+	            if (hash[key] !== undefined) {
+	                newJson[hash[key]] = json[key];
+	            } else {
+	                newJson[key] = json[key];
+	            }
+	        }
+	    }
+	    return newJson;
+	}
+
+	function convertToQuery(json) {
+	    var query = "";
+	    json = processQuery(json);
+	    console.log(json);
+	    for (var key in json) {
+	        if (json.hasOwnProperty(key)) {
+	            if (json[key] !== undefined && trim(json[key]) !== "") {
+	                query += key + "=" + encodeURIComponent(json[key]) + "&";
+	            }
+	        }
+	    }
+	    return query.slice(0, -1);
+	}
+
+	function on(handler, event, hook) {
+	    handler.addEventListener(event, hook, false);
+	}
+
+	function sendToServer(query) {
+	    var req = new Image();
+	    var url = _configJs2["default"].serverURL + "?" + query;
+	    req.src = url;
+	}
+
+	exports.sendToServer = sendToServer;
+	exports.on = on;
+	exports.convertToQuery = convertToQuery;
+
+/***/ },
+
+/***/ 2:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Created by Yixi on 6/8/15.
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _utilJs = __webpack_require__(1);
+
+	function viewEventHook() {
+	    console.log('change');
+	    var doc = window.document,
+	        referrer = doc.referrer,
+	        domain = window.location.host,
+	        path = window.location.pathname,
+	        search = window.location.search,
+	        hash = window.location.hash;
+
+	    var query = (0, _utilJs.convertToQuery)({
+	        referrer: referrer,
+	        domain: domain,
+	        path: path,
+	        search: search,
+	        hash: hash
+	    });
+
+	    (0, _utilJs.sendToServer)(query);
+	}
+
+	exports.viewEventHook = viewEventHook;
+
+/***/ },
+
+/***/ 51:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Created by Yixi on 6/8/15.
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports['default'] = {
+	  serverURL: 'http://localhost:8080/h'
+	};
+	module.exports = exports['default'];
+
+/***/ }
+
+/******/ });
