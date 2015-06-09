@@ -2,6 +2,7 @@
   "ignore":[
     ".git",
     "pageTracker",
-    "node_modules"
+    "node_modules",
+    "components"
   ]
 }

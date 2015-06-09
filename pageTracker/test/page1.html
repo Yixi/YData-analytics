@@ -23,7 +23,7 @@
         window.YData = window.YData || [], YData.load = function(t){
             window.YData.id = t;
             var a = document.createElement('script');
-            a.type = 'text/javascript', a.async = !0, a.src='http://localhost:8080/js/YTracker.js';
+            a.type = 'text/javascript', a.async = !0, a.src='http://localhost:8080/dist/YTracker.js';
             var n = document.getElementsByTagName("script")[0];
             n.parentNode.insertBefore(a,n);
         };

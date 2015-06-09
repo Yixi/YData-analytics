@@ -4,12 +4,22 @@
 
 'use strict';
 
+require('./App.less');
+
 import React from 'react';
+import Header from './Header.js';
+import {RouteHandler} from 'react-router';
+
 
 
 class App extends React.Component{
     render(){
-        return <div>app</div>
+        return (
+            <div>
+                <Header />
+                <RouteHandler/>
+            </div>
+        )
     }
 }
 

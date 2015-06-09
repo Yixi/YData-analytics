@@ -34,15 +34,14 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/js/";
+/******/ 	__webpack_require__.p = "/dist/";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -53,7 +52,7 @@
 
 	var _utilJs = __webpack_require__(1);
 
-	var _viewEventJs = __webpack_require__(2);
+	var _viewEventJs = __webpack_require__(3);
 
 	function bindViewEvent() {
 	    (0, _utilJs.on)(window, 'hashchange', _viewEventJs.viewEventHook);
@@ -69,8 +68,7 @@
 	start();
 
 /***/ },
-
-/***/ 1:
+/* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -85,7 +83,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-	var _configJs = __webpack_require__(51);
+	var _configJs = __webpack_require__(2);
 
 	var _configJs2 = _interopRequireDefault(_configJs);
 
@@ -145,8 +143,25 @@
 	exports.convertToQuery = convertToQuery;
 
 /***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
 
-/***/ 2:
+	/**
+	 * Created by Yixi on 6/8/15.
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports['default'] = {
+	  serverURL: 'http://localhost:8080/r'
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -183,25 +198,5 @@
 
 	exports.viewEventHook = viewEventHook;
 
-/***/ },
-
-/***/ 51:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Created by Yixi on 6/8/15.
-	 */
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	exports['default'] = {
-	  serverURL: 'http://localhost:8080/h'
-	};
-	module.exports = exports['default'];
-
 /***/ }
-
-/******/ });
+/******/ ]);
