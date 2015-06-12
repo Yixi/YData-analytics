@@ -3670,7 +3670,7 @@
 
 	var _componentsLayoutHomeJs2 = _interopRequireDefault(_componentsLayoutHomeJs);
 
-	var _componentsConsoleJs = __webpack_require__(111);
+	var _componentsConsoleJs = __webpack_require__(58);
 
 	var _componentsConsoleJs2 = _interopRequireDefault(_componentsConsoleJs);
 
@@ -3710,13 +3710,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _HeaderJs = __webpack_require__(56);
+	var _HeaderJs = __webpack_require__(52);
 
 	var _HeaderJs2 = _interopRequireDefault(_HeaderJs);
 
 	var _reactRouter = __webpack_require__(5);
 
-	__webpack_require__(52);
+	__webpack_require__(53);
 
 	var App = (function (_React$Component) {
 	    function App() {
@@ -3749,15 +3749,6 @@
 
 /***/ },
 /* 52 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3839,6 +3830,15 @@
 	module.exports = exports['default'];
 
 /***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 54 */,
+/* 55 */,
+/* 56 */,
 /* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3913,6 +3913,76 @@
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _react = __webpack_require__(4);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _clientModuleIoManageJs = __webpack_require__(59);
+
+	var Console = _react2['default'].createClass({
+	    displayName: 'Console',
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            logs: []
+	        };
+	    },
+
+	    componentDidMount: function componentDidMount() {
+	        var _this = this;
+
+	        (0, _clientModuleIoManageJs.socketOn)('newEvent', function (data) {
+	            console.log(data);
+	            var logs = _this.state.logs.concat([data]);
+	            _this.setState({ logs: logs });
+	        });
+	    },
+
+	    componentWillUnmount: function componentWillUnmount() {
+	        (0, _clientModuleIoManageJs.socketOff)('newEvent');
+	    },
+
+	    render: function render() {
+
+	        var log = function log(item, index) {
+	            return _react2['default'].createElement(
+	                'li',
+	                null,
+	                item.h
+	            );
+	        };
+
+	        return _react2['default'].createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2['default'].createElement(
+	                'ul',
+	                null,
+	                this.state.logs.map(log)
+	            )
+	        );
+	    }
+	});
+
+	exports['default'] = Console;
+	module.exports = exports['default'];
+
+/***/ },
+/* 59 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Created by Yixi on 6/9/15.
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
 	var socket;
 
 	function socketOn(name, callback) {
@@ -3930,126 +4000,6 @@
 
 	exports.socketOff = socketOff;
 	exports.socketOn = socketOn;
-
-/***/ },
-/* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */,
-/* 69 */,
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */,
-/* 75 */,
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */,
-/* 84 */,
-/* 85 */,
-/* 86 */,
-/* 87 */,
-/* 88 */,
-/* 89 */,
-/* 90 */,
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Created by Yixi on 6/9/15.
-	 */
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
-
-	var _react = __webpack_require__(4);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _clientModuleIoManageJs = __webpack_require__(58);
-
-	var Console = (function (_React$Component) {
-	    function Console() {
-	        _classCallCheck(this, Console);
-
-	        if (_React$Component != null) {
-	            _React$Component.apply(this, arguments);
-	        }
-	    }
-
-	    _inherits(Console, _React$Component);
-
-	    _createClass(Console, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            (0, _clientModuleIoManageJs.socketOn)('newEvent', function (data) {
-	                console.log(data);
-	            });
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            (0, _clientModuleIoManageJs.socketOff)('newEvent');
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2['default'].createElement(
-	                'div',
-	                { className: 'row' },
-	                'Console'
-	            );
-	        }
-	    }]);
-
-	    return Console;
-	})(_react2['default'].Component);
-
-	exports['default'] = Console;
-	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);
